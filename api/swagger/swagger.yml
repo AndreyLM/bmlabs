@@ -1,0 +1,201 @@
+swagger: '2.0'
+info:
+  title: BMLABS
+  description: descrption about project
+  version: v1.0.0
+  license:
+    name: MIT
+host: localhost
+basePath: /api/v1
+schemes:
+  - http
+
+paths:
+  /users:
+    post:
+      summary: Add a new user
+      tags:
+        - users
+        - create
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/UserForm"
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: "#/definitions/Result"
+        default:
+          description: "generic error response"
+          schema:
+            $ref: "#/definitions/Error"
+  
+  /users/search:
+    post:
+      summary: Search users
+      tags:
+        - users
+        - search
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/DynamicSearch"
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: "#/definitions/UserResult"
+        default:
+          description: "generic error response"
+          schema:
+            $ref: "#/definitions/Error"
+    
+  
+definitions:
+  Gender:
+    type: object
+    properties:
+      gender:
+        type: string
+        enum:
+          - Female
+          - Male
+  UserBase:
+    properties:
+        email:
+          type: string
+        last_name:
+          type: string
+        country:
+          type: string
+        city:
+          type: string
+        birth_date:
+          type: string
+        gender:
+          type: string
+          enum:
+            - Female
+            - Male
+  User:
+    type: object
+    allOf:
+      - $ref: '#/definitions/UserBase'
+    properties:
+      uuid:
+        type: string
+    required:
+      - uuid
+      - email
+      - last_name
+      - country
+      - city
+      - birth_date
+      - gender
+          
+  UserForm:
+    type: object
+    allOf:
+      - $ref: '#/definitions/UserBase'
+    required:
+      - email
+      - last_name
+      - country
+      - city
+      - birth_date
+      - gender
+  
+   
+  DynamicSearch:
+    type: object
+    properties:
+      search:
+        type: object
+        properties:
+          filter:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                operator:
+                  type: string
+                  enum: [in, like, eq, neq, gt, gte, lt, lte, range]
+                type:
+                  type: string
+                  enum: [number, float, date, text]
+                value:
+                  type: array
+                  items:
+                    type: string
+          sort:
+            type: object
+            properties:
+              attribute:
+                type: string
+              type:
+                type: string
+                enum: [asc, desc]
+          pagination:
+            type: object
+            properties:
+              current_page:
+                type: integer
+              pageSize:
+                type: integer
+              item_count:
+                type: integer
+              page_count:
+                type: integer
+              offset:
+                type: integer
+  
+  UserResult:
+    allOf:
+      - $ref: "#/definitions/Result"
+    type: object
+    properties:
+      result:
+        type: array
+        items:
+          allOf:
+          - $ref: '#/definitions/User'
+      
+  Result:
+    type: object
+    required: 
+      - message
+    properties:
+      status:
+        type: integer
+        format: int64
+      message:
+        type: string
+  
+  Error:
+    allOf:
+      - $ref: "#/definitions/Result"
+    type: object
+    properties:
+      errors:
+        type: array
+        items:
+          properties:
+            property:
+              type: string
+            message:
+              type: string

@@ -1,0 +1,13 @@
+# APP
+APP_NAME: "bmlabs"
+APP_HOST: "localhost"
+APP_PORT: 33001
+
+# DB 
+DB_DRIVER: "mongodb"
+DB_HOST: "localhost"
+DB_PORT: 27017
+DB_NAME: "bmlabs"
+DB_USER: "admin"
+DB_PASSWORD: "password"
+
