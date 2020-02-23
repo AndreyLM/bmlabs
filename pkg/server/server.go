@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 
+	"github.com/andreylm/bmlabs/pkg/db"
 	"github.com/andreylm/bmlabs/pkg/logger"
 	"github.com/andreylm/bmlabs/pkg/router"
 	"github.com/valyala/fasthttp"
@@ -14,11 +15,11 @@ type server struct {
 	router *router.Router
 }
 
-func NewServer(host string, port int) *server {
+func NewServer(host string, port int, db db.Storer) *server {
 	return &server{
 		port:   port,
 		host:   host,
-		router: router.NewRouter(),
+		router: router.NewRouter(db),
 	}
 }
 

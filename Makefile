@@ -4,5 +4,8 @@ swagger:
 run:
 	go run ./cmd/server/main.go
 	
+run-docker:
+	cd docker && docker-compose down && docker-compose up -d
+
 build:
 	

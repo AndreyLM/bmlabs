@@ -23,9 +23,8 @@ func main() {
 		config.ReadEnvString("DB_USER"),
 		config.ReadEnvString("DB_PASSWORD"),
 	)
-	_ = db
 
-	srv := server.NewServer(config.ReadEnvString("APP_HOST"), config.ReadEnvInt("APP_PORT"))
+	srv := server.NewServer(config.ReadEnvString("APP_HOST"), config.ReadEnvInt("APP_PORT"), db)
 	srv.Init()
 	logger.Get().Panic(srv.Run())
 }

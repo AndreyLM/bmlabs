@@ -3,6 +3,9 @@ module github.com/andreylm/bmlabs
 go 1.12
 
 require (
+	github.com/go-ozzo/ozzo-routing v2.1.4+incompatible
+	github.com/go-playground/validator/v10 v10.2.0
+	github.com/golang/gddo v0.0.0-20200219175727-df439dd5819e // indirect
 	github.com/klauspost/compress v1.10.1 // indirect
 	github.com/klauspost/cpuid v1.2.3 // indirect
 	github.com/qiangxue/fasthttp-routing v0.0.0-20160225050629-6ccdc2a18d87
