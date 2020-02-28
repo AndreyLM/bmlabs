@@ -125,7 +125,7 @@ definitions:
       search:
         type: object
         properties:
-          filter:
+          filters:
             type: array
             items:
               type: object

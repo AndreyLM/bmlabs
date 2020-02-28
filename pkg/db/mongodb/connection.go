@@ -16,6 +16,7 @@ type mongoStorage struct {
 	user db.UserRepository
 }
 
+// NewStorage - creates mongo db storage
 func NewStorage(host string, port int, dbName, user, password string) db.Storer {
 	uri := fmt.Sprintf("mongodb://%s:%s@%s:%d", user, password, host, port)
 
